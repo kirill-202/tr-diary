@@ -43,12 +43,15 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.Static("/static", "./static")
+
 	router.LoadHTMLGlob("templates/*.html")
 
 	router.GET("/", func(context *gin.Context){
 		context.HTML(http.StatusOK, "index.html", gin.H{
 			"Title": "Homepage", 
 			"Message": welcomeString,
+			"SidebarContent": "My sidebar mock menu",
 		})
 	})
 
