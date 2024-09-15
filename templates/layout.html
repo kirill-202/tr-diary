@@ -13,31 +13,32 @@
 {{ define "header"}}
 <header>
     <h1>Misterious Diary</h1>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/support">Support</a></li>
-        </ul>
-    </nav>
 </header>
 {{end}}
 
 
 {{ define "footer"}}
 <footer>
-    <p> TR Diary, Copyrights are reserved for all supporters 2024(c)</p>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+
+        </ul>
+    </nav>
+    <p>&copy; 2024 TR Diary. </p>
 </footer>
 {{end}}
 
 
 {{ define "left-sidebar"}}
-<div class="container">
+
     <div class="sidebar left-sidebar">
-        <h2>Left Sidebar</h2>
-        <p>Content for the left sidebar. </p>
+        <!-- Here should go 'inner thouths on what Tom Riddle diary talk with you' -->
+        <h2>Notes</h2>
+
         <p>{{ . }}</p> 
     </div>
-</div>
+
 {{end}}
 

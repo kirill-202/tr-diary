@@ -4,9 +4,17 @@
 
 <body>
 {{template "header"}}
+
+<div class="container">
 {{template "left-sidebar" .SidebarContent }}
-<h2>Welcome to this mysterious page!</h2>
-<p>{{ .Message }}</p>
+
+
+<div class="book">
+    <h2>Welcome to this mysterious page!</h2>
+    <p>{{ .Message }}</p>
+</div>
+
+</div>
 
 {{template "footer"}}
 </body>

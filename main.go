@@ -6,11 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"log"
+	//"strings"
+	"net"
 	//"os"
 	//"html/template"
 )
 
 const port = "8081"
+const mySupportMail = "supportemail@gmail.com"
 
 //This function assumes that all templates are in the same folder
 // func getTemplatePaths(path string) ([]string, error){
@@ -30,7 +33,28 @@ const port = "8081"
 // }
 
 
+func LoggerMiddleWare(context *gin.Context) {
+	log.Printf("Full request path %s", context.FullPath())
+	log.Printf("The IP address in the header")
+}
 
+func RateLimiterMiddleWare(context *gin.Context) {
+
+	ipAddress := context.Request.RemoteAddr
+	// IpPortDelim := strings.LastIndex(ipAddress, ":")
+	// IP, Port := ipAddress[:IpPortDelim], ipAddress[IpPortDelim+1:]
+
+
+	// println(IP, Port)
+	ip, port, err := net.SplitHostPort(ipAddress)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+	println(ip, port)
+
+
+}
 
 func main() {
 
@@ -43,8 +67,10 @@ func main() {
 	}
 
 	router := gin.Default()
-	router.Static("/static", "./static")
+	router.Use(LoggerMiddleWare)
+	router.Use(RateLimiterMiddleWare)
 
+	router.Static("/static", "./static")
 	router.LoadHTMLGlob("templates/*.html")
 
 	router.GET("/", func(context *gin.Context){
@@ -55,14 +81,14 @@ func main() {
 		})
 	})
 
-	router.GET("/about", func(c *gin.Context) {
+	router.GET("/about", func(context *gin.Context) {
         data := gin.H{
-            "Title":       "About",
+            "Title": "About",
             "Description": "Learn more about us on this page.",
         }
-        c.HTML(http.StatusOK, "about.html", data)
+        context.HTML(http.StatusOK, "about.html", data)
     })
-	
+
 
 	fmt.Println("The test Go server is running on port: ", port)
 	router.Run(":"+ port) 
